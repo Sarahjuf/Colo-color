@@ -1,0 +1,107 @@
+صدى "# Colo-color" >> README.md 
+git init 
+add README.md 
+git -m "التثبيت الأول" 
+git Branch -M main 
+git remote add origin https://github.com/Sarahjuf/Colo-color. git
+ git push -u origin main. بوابة بوابة الدفع. بوابة الدفع
+
+```
+import pygame
+import random
+
+# تعريف الألوان المستخدمة في اللعبة
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+
+# تهيئة اللعبة
+pygame.init()
+size = (800, 600)
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption("هروب الطفل المسروق")
+clock = pygame.time.Clock()
+
+# تعريف الشخصيات والأدوات المستخدمة في اللعبة
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([50, 50])
+        self.image.fill(BLUE)
+        self.rect = self.image.get_rect()
+
+    def update(self):
+        pos = pygame.mouse.get_pos()
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([50, 50])
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(size[0] - self.rect.width)
+        self.rect.y = random.randrange(size[1] - self.rect.height)
+
+class Item(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface([25, 25])
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randrange(size[0] - self.rect.width)
+        self.rect.y = random.randrange(size[1] - self.rect.height)
+
+# تعريف دالة اللعبة الرئيسية
+def game():
+    # إنشاء الشخصيات والأدوات
+    player = Player()
+    enemies = pygame.sprite.Group()
+    for i in range(10):
+        enemy = Enemy()
+        enemies.add(enemy)
+    items = pygame.sprite.Group()
+    for i in range(5):
+        item = Item()
+        items.add(item)
+
+    # بدء اللعبة
+    score = 0
+    done = False
+    while not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                done = True
+
+        # تحريك الشخصية الرئيسية
+        player.update()
+
+        # الكشف عن التصادمات
+        enemies_hit = pygame.sprite.spritecollide(player, enemies, False)
+        for enemy in enemies_hit:
+            done = True
+        items_hit = pygame.sprite.spritecollide(player, items, True)
+        for item in items_hit:
+            score += 10
+
+        # رسم الشاشة
+        screen.fill(WHITE)
+        all_sprites.draw(screen)
+        font = pygame.font.SysFont(None, 25)
+        text = font.render("Score: " + str(score), True, BLACK)
+        screen.blit(text, [0, 0])
+
+        # تحديث الشاشة
+        pygame.display.flip()
+        clock.tick(60)
+
+    # إغلاق اللعبة
+    pygame.quit()
+
+game()
+```
+
+ 
